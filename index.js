@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { NativeModules, Image, Platform } from 'react-native';
+import { NativeModules, Image, Platform, requireNativeComponent} from 'react-native';
 import { Configuration } from './configuration';
+import React from 'react';
 
 const { RNVideoEditorSDK } = NativeModules;
 
@@ -170,5 +171,15 @@ class VideoEditorModal extends Component {
   }
 }
 
-export { VESDK, VideoEditorModal };
+
+var VideoEditor = requireNativeComponent('VideoEditorView', VideoEditorView);
+class VideoEditorView extends React.Component {
+  render() {
+      return (
+          <VideoEditor style={{ flex: 1 }}/>
+      )
+  }
+}
+
+export { VESDK, VideoEditorModal, VideoEditorView };
 export * from './configuration';

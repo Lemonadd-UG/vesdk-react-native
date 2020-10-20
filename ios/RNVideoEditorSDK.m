@@ -1,13 +1,13 @@
 #import "RNVideoEditorSDK.h"
 #import "RNImglyKit.h"
 #import "RNImglyKitSubclass.h"
+#import "VideoEditorViewManager.h"
 
 @interface RNVideoEditorSDK () <PESDKVideoEditViewControllerDelegate>
 
 @end
 
 @implementation RNVideoEditorSDK {
-    PESDKVideoEditViewController *vevController;
     PESDKPhotoEditToolController *vetController;
 }
 
@@ -46,7 +46,8 @@ static RNVESDKWillPresentBlock _willPresentVideoEditViewController = nil;
     PESDKVideoEditViewController *videoEditViewController = [[PESDKVideoEditViewController alloc] initWithVideoAsset:video
                                                                                                        configuration:configuration
                                                                                                       photoEditModel:photoEditModel];
-    self->vevController = videoEditViewController;
+    self.vevController = videoEditViewController;
+    [VideoEditorViewManager setSdk:self];
     [self customizeVevController];
     videoEditViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     videoEditViewController.delegate = self;
@@ -163,43 +164,43 @@ RCT_EXPORT_METHOD(present:(nonnull NSURLRequest *)request
 #pragma mark - BouncyCustom
 
 - (void)customizeVevController {
-    [vevController.menuViewController hideMenuWithAnimated:false];
-    [vevController.toolbar setHidden:true];
+    [_vevController.menuViewController hideMenuWithAnimated:false];
+    [_vevController.toolbar setHidden:true];
 }
 
 RCT_EXPORT_METHOD(showToolFilter) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->vevController presentToolFor:PESDKToolMenuItem.createFilterToolItem];
+        [self.vevController presentToolFor:PESDKToolMenuItem.createFilterToolItem];
     });
 }
 
 RCT_EXPORT_METHOD(showToolTrim) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->vevController presentToolFor:PESDKToolMenuItem.createTrimToolItem];
+        [self.vevController presentToolFor:PESDKToolMenuItem.createTrimToolItem];
     });
 }
 
 RCT_EXPORT_METHOD(showToolText) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->vevController presentToolFor:PESDKToolMenuItem.createTextToolItem];
+        [self.vevController presentToolFor:PESDKToolMenuItem.createTextToolItem];
     });
 }
 
 RCT_EXPORT_METHOD(showToolSticker) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->vevController presentToolFor:PESDKToolMenuItem.createStickerToolItem];
+        [self.vevController presentToolFor:PESDKToolMenuItem.createStickerToolItem];
     });
 }
 
 RCT_EXPORT_METHOD(undo) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->vevController.undoController undo];
+        [self.vevController.undoController undo];
     });
 }
 
 RCT_EXPORT_METHOD(redo) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->vevController.undoController redo];
+        [self.vevController.undoController redo];
     });
 }
 
@@ -223,7 +224,7 @@ RCT_EXPORT_METHOD(applyTool) {
 
 RCT_EXPORT_METHOD(renderHighResolutionVariant) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self->vevController renderHighResolutionVariant];
+        [self.vevController renderHighResolutionVariant];
     });
 }
 

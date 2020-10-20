@@ -16,4 +16,6 @@ typedef void (^RNVESDKWillPresentBlock)(PESDKVideoEditViewController * _Nonnull 
 /// Set this closure to modify a new @c VideoEditViewController before it is presented on screen.
 @property (class, strong, atomic, nullable) RNVESDKWillPresentBlock willPresentVideoEditViewController;
 
+@property PESDKVideoEditViewController * _Nullable vevController;
+
 @end
