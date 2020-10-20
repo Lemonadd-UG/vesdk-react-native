@@ -133,6 +133,10 @@ class VESDK {
       RNVideoEditorSDK.unlockWithLicense(license);
     }
   }
+
+  static getRNVSDK() {
+    return RNVideoEditorSDK;
+  }
 }
 
 class VideoEditorModal extends Component {

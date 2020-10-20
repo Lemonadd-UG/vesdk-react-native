@@ -6,7 +6,9 @@
 
 @end
 
-@implementation RNVideoEditorSDK
+@implementation RNVideoEditorSDK {
+    PESDKVideoEditViewController *vevController;
+}
 
 RCT_EXPORT_MODULE();
 
@@ -43,6 +45,8 @@ static RNVESDKWillPresentBlock _willPresentVideoEditViewController = nil;
     PESDKVideoEditViewController *videoEditViewController = [[PESDKVideoEditViewController alloc] initWithVideoAsset:video
                                                                                                        configuration:configuration
                                                                                                       photoEditModel:photoEditModel];
+    self->vevController = videoEditViewController;
+    [self customizeVevController];
     videoEditViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     videoEditViewController.delegate = self;
     RNVESDKWillPresentBlock willPresentVideoEditViewController = RNVideoEditorSDK.willPresentVideoEditViewController;
@@ -150,6 +154,36 @@ RCT_EXPORT_METHOD(present:(nonnull NSURLRequest *)request
   [self dismiss:videoEditViewController animated:YES completion:^{
     reject(RN_IMGLY.kErrorUnableToExport, @"Unable to generate video", nil);
   }];
+}
+
+#pragma mark - BouncyCustom
+
+- (void)customizeVevController {
+    [vevController.menuViewController hideMenuWithAnimated:false];
+}
+
+RCT_EXPORT_METHOD(showToolFilter) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->vevController presentToolFor:PESDKToolMenuItem.createFilterToolItem];
+    });
+}
+
+RCT_EXPORT_METHOD(showToolTrim) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->vevController presentToolFor:PESDKToolMenuItem.createTrimToolItem];
+    });
+}
+
+RCT_EXPORT_METHOD(showToolText) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->vevController presentToolFor:PESDKToolMenuItem.createTextToolItem];
+    });
+}
+
+RCT_EXPORT_METHOD(showToolSticker) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->vevController presentToolFor:PESDKToolMenuItem.createStickerToolItem];
+    });
 }
 
 @end
