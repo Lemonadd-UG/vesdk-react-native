@@ -8,6 +8,7 @@
 
 @implementation RNVideoEditorSDK {
     PESDKVideoEditViewController *vevController;
+    PESDKPhotoEditToolController *vetController;
 }
 
 RCT_EXPORT_MODULE();
@@ -156,10 +157,14 @@ RCT_EXPORT_METHOD(present:(nonnull NSURLRequest *)request
   }];
 }
 
+- (void)mediaEditViewController:(PESDKMediaEditViewController *)mediaEditViewController willPresentToolController:(PESDKPhotoEditToolController *)toolController {
+    vetController = toolController;
+}
 #pragma mark - BouncyCustom
 
 - (void)customizeVevController {
     [vevController.menuViewController hideMenuWithAnimated:false];
+    [vevController.toolbar setHidden:true];
 }
 
 RCT_EXPORT_METHOD(showToolFilter) {
@@ -198,4 +203,21 @@ RCT_EXPORT_METHOD(redo) {
     });
 }
 
+RCT_EXPORT_METHOD(discardTool) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(self->vetController != nil) {
+            [self->vetController discard:self->vetController.toolbarItem];
+            self->vetController = nil;
+        }
+    });
+}
+
+RCT_EXPORT_METHOD(applyTool) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(self->vetController != nil) {
+            [self->vetController apply:self->vetController.toolbarItem];
+            self->vetController = nil;
+        }
+    });
+}
 @end
