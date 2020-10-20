@@ -220,4 +220,11 @@ RCT_EXPORT_METHOD(applyTool) {
         }
     });
 }
+
+RCT_EXPORT_METHOD(renderHighResolutionVariant) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->vevController renderHighResolutionVariant];
+    });
+}
+
 @end
