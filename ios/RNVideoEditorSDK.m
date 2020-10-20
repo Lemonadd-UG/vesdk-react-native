@@ -186,4 +186,16 @@ RCT_EXPORT_METHOD(showToolSticker) {
     });
 }
 
+RCT_EXPORT_METHOD(undo) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->vevController.undoController undo];
+    });
+}
+
+RCT_EXPORT_METHOD(redo) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->vevController.undoController redo];
+    });
+}
+
 @end
