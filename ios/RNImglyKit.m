@@ -138,9 +138,6 @@ const struct RN_IMGLY_Constants RN_IMGLY = {
     self.resolve = resolve;
     self.reject = reject;
     self.mediaEditViewController = mediaEditViewController;
-
-    UIViewController *currentViewController = RCTPresentedViewController();
-    //[currentViewController presentViewController:self.mediaEditViewController animated:YES completion:NULL];
   });
 }
 
