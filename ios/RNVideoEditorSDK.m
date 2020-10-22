@@ -166,6 +166,8 @@ RCT_EXPORT_METHOD(present:(nonnull NSURLRequest *)request
 - (void)customizeVevController {
     [_vevController.menuViewController hideMenuWithAnimated:false];
     [_vevController.toolbar setHidden:true];
+    _vevController.mediaEditPreviewController.previewView.layer.cornerRadius = 10;
+    _vevController.mediaEditPreviewController.previewView.layer.masksToBounds = true;
 }
 
 RCT_EXPORT_METHOD(showToolFilter) {
@@ -226,6 +228,14 @@ RCT_EXPORT_METHOD(renderHighResolutionVariant) {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.vevController renderHighResolutionVariant];
     });
+}
+
+RCT_EXPORT_METHOD(pausePreview) {
+    //[self.vevController pause];
+}
+
+RCT_EXPORT_METHOD(playPreview) {
+    //[self.vevController play];
 }
 
 @end
