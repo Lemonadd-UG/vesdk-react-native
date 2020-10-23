@@ -2,6 +2,7 @@
 #import "RNImglyKit.h"
 #import "RNImglyKitSubclass.h"
 #import "VideoEditorViewManager.h"
+#import "RNVideoEditorSDKDelegate.h"
 
 @interface RNVideoEditorSDK () <PESDKVideoEditViewControllerDelegate>
 
@@ -160,6 +161,9 @@ RCT_EXPORT_METHOD(present:(nonnull NSURLRequest *)request
 
 - (void)mediaEditViewController:(PESDKMediaEditViewController *)mediaEditViewController willPresentToolController:(PESDKPhotoEditToolController *)toolController {
     vetController = toolController;
+    if(_delegate != nil) {
+        [_delegate toolWillBecomeActive:NSStringFromClass([toolController class])];
+    }
 }
 #pragma mark - BouncyCustom
 

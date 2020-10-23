@@ -1,6 +1,7 @@
 #import <React/RCTBridgeModule.h>
 #import "RNImglyKit.h"
 
+@protocol RNVideoEditorSDKDelegate;
 @import VideoEditorSDK;
 
 /// The React Native module for VideoEditor SDK
@@ -17,5 +18,6 @@ typedef void (^RNVESDKWillPresentBlock)(PESDKVideoEditViewController * _Nonnull 
 @property (class, strong, atomic, nullable) RNVESDKWillPresentBlock willPresentVideoEditViewController;
 
 @property PESDKVideoEditViewController * _Nullable vevController;
+@property id<RNVideoEditorSDKDelegate> _Nullable delegate;
 
 @end
