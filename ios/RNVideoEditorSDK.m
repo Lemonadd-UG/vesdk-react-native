@@ -237,11 +237,11 @@ RCT_EXPORT_METHOD(renderHighResolutionVariant) {
 }
 
 RCT_EXPORT_METHOD(pausePreview) {
-    //[self.vevController pause];
+    [self.vevController pause];
 }
 
 RCT_EXPORT_METHOD(playPreview) {
-    //[self.vevController play];
+    [self.vevController play];
 }
 
 @end
