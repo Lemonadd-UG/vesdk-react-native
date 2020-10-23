@@ -194,6 +194,12 @@ RCT_EXPORT_METHOD(showToolSticker) {
     });
 }
 
+RCT_EXPORT_METHOD(showToolTextDesign) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.vevController presentToolFor:PESDKToolMenuItem.createTextDesignToolItem];
+    });
+}
+
 RCT_EXPORT_METHOD(undo) {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.vevController.undoController undo];
