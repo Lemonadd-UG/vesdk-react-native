@@ -28,7 +28,6 @@ RCT_EXPORT_MODULE();
 }
 
 - (void)toolDidBecomeActive:(NSString *)name {
-    hasListeners = true;
     if(hasListeners) {
         [self sendEventWithName:@"EventToolActive" body:@{@"name": name}];
     }
