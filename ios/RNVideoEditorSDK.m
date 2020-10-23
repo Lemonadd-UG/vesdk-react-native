@@ -134,15 +134,13 @@ RCT_EXPORT_METHOD(present:(nonnull NSURLRequest *)request
 
   RCTPromiseResolveBlock resolve = self.resolve;
   RCTPromiseRejectBlock reject = self.reject;
-  [self dismiss:videoEditViewController animated:YES completion:^{
-    if (error == nil) {
-      resolve(@{ @"video": (url != nil) ? url.absoluteString : [NSNull null],
-                 @"hasChanges": @(videoEditViewController.hasChanges),
-                 @"serialization": (serialization != nil) ? serialization : [NSNull null] });
-    } else {
+  if (error == nil) {
+    resolve(@{ @"video": (url != nil) ? url.absoluteString : [NSNull null],
+               @"hasChanges": @(videoEditViewController.hasChanges),
+               @"serialization": (serialization != nil) ? serialization : [NSNull null] });
+  } else {
       reject(RN_IMGLY.kErrorUnableToExport, [NSString RN_IMGLY_string:@"Unable to export video or serialization." withError:error], error);
-    }
-  }];
+  }
 }
 
 - (void)videoEditViewControllerDidCancel:(nonnull PESDKVideoEditViewController *)videoEditViewController {
