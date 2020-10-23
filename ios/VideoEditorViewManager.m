@@ -1,13 +1,14 @@
 #import "VideoEditorViewManager.h"
-#import "VideoEditorView.h"
 #import "RNVideoEditorSDK.h"
 #import "RNVideoEditorSDKDelegate.h"
+#import "VideoEditorEventManager.h"
 
 @interface VideoEditorViewManager () <RNVideoEditorSDKDelegate>
 @end
 
 @implementation VideoEditorViewManager
 static RNVideoEditorSDK* _sdk = nil;
+static VideoEditorEventManager* _eventManager = nil;
 
 +(void)setSdk:(RNVideoEditorSDK *)sdk {
     _sdk = sdk;
@@ -24,11 +25,10 @@ RCT_EXPORT_MODULE(VideoEditorView)
 }
 
 -(void)toolWillBecomeActive:(NSString*)name {
-    //if(!VideoEditorViewManager.sdk.vevController.view.onToolDidBecomeActive) {
-    //    return;
-    //}
-    //VideoEditorViewManager.sdk.vevController.view.onToolDidBecomeActive(@{@"name": name});
-    NSLog(@"%@", name);
+    if(_eventManager == nil) {
+       _eventManager = [VideoEditorEventManager allocWithZone: nil];
+    }
+    [_eventManager toolDidBecomeActive:name];
 }
 
 @end
