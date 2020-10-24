@@ -27,6 +27,7 @@ RCT_EXPORT_MODULE(VideoEditorView)
 -(void)toolWillBecomeActive:(NSString*)name {
     if(_eventManager == nil) {
        _eventManager = [VideoEditorEventManager allocWithZone: nil];
+       [_eventManager setBridge:self.bridge];
     }
     [_eventManager toolDidBecomeActive:name];
 }
